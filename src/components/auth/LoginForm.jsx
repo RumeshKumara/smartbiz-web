@@ -144,7 +144,7 @@ export const LoginForm = () => {
         style={{ width: "100%" }}
       >
         <Card
-          elevation={2}
+          elevation={8}
           sx={{
             bgcolor: "background.paper",
             opacity: 0.95,
@@ -158,6 +158,7 @@ export const LoginForm = () => {
             },
             maxWidth: 480,
             mx: "auto",
+            boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.2)",
           }}
         >
           <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
@@ -525,25 +526,6 @@ export const LoginForm = () => {
             </form>
           </CardContent>
           <Divider />
-          <Box sx={{ p: 2, textAlign: "center" }}>
-            <Typography variant="body2" color="text.secondary">
-              Demo Credentials:
-            </Typography>
-            <Typography
-              variant="caption"
-              display="block"
-              color="text.secondary"
-            >
-              <strong>Business:</strong> owner@business.com / owner123
-            </Typography>
-            <Typography
-              variant="caption"
-              display="block"
-              color="text.secondary"
-            >
-              <strong>Admin:</strong> admin@smartbiz.com / admin123
-            </Typography>
-          </Box>
         </Card>
       </motion.div>
     </Box>
