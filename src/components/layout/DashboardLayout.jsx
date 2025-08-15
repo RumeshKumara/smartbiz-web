@@ -137,8 +137,8 @@ const DashboardLayout = ({ children }) => {
         </Box>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {children}
+      <Box component="main" sx={{ flexGrow: 1, py: 3 }}>
+        <Container maxWidth="xl">{children}</Container>
       </Box>
     </Box>
   );

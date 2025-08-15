@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "../hooks/use-toast";
 
 import {
   DollarSign,
@@ -16,7 +15,17 @@ import {
 } from "lucide-react";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import MetricCard from "../components/dashboard/MetricCard";
-import { Card, CardHeader, CardContent, Button, Chip } from "@mui/material";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  Chip,
+  Grid,
+  Typography,
+  Box,
+  Stack,
+} from "@mui/material";
 
 // Mock data - in a real app, this would come from an API
 const mockMetrics = {
@@ -82,7 +91,6 @@ const lowStockItems = [
 export default function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -91,85 +99,89 @@ export default function Dashboard() {
 
   const businessName = localStorage.getItem("businessName") || "Your Business";
 
-  const handleQuickAction = (action, route) => {
-    if (route) {
-      navigate(route);
-    } else {
-      toast({
-        title: `${action} clicked`,
-        description: "This would open the corresponding feature.",
-      });
-    }
-  };
-
   return (
     <DashboardLayout userRole="business">
-      <div className="space-y-6 fade-in">
+      <Box>
         {/* Welcome Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">
+        <Box
+          display="flex"
+          flexDirection={{ xs: "column", sm: "row" }}
+          alignItems={{ sm: "center" }}
+          justifyContent="space-between"
+          mb={3}
+        >
+          <Box>
+            <Typography variant="h4" fontWeight={700} gutterBottom>
               Welcome back! 👋
-            </h1>
-            <p className="text-muted-foreground mt-1">
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
               Here's what's happening with {businessName} today.
-            </p>
-          </div>
-          <div className="flex items-center space-x-2 mt-4 sm:mt-0">
+            </Typography>
+          </Box>
+          <Box mt={{ xs: 2, sm: 0 }}>
             <Chip
               variant="outlined"
-              icon={<Calendar className="h-3 w-3" />}
+              icon={<Calendar size={14} />}
               label={currentTime.toLocaleDateString()}
             />
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {/* Key Metrics */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <MetricCard
-            title="Total Revenue"
-            value={mockMetrics.revenue.value}
-            change={mockMetrics.revenue.change}
-            changeType={mockMetrics.revenue.changeType}
-            icon={DollarSign}
-            variant="revenue"
-          />
-          <MetricCard
-            title="Net Profit"
-            value={mockMetrics.profit.value}
-            change={mockMetrics.profit.change}
-            changeType={mockMetrics.profit.changeType}
-            icon={TrendingUp}
-            variant="profit"
-          />
-          <MetricCard
-            title="Total Expenses"
-            value={mockMetrics.expenses.value}
-            change={mockMetrics.expenses.change}
-            changeType={mockMetrics.expenses.changeType}
-            icon={DollarSign}
-            variant="expense"
-          />
-          <MetricCard
-            title="Inventory Items"
-            value={mockMetrics.inventory.value}
-            change={mockMetrics.inventory.change}
-            changeType={mockMetrics.inventory.changeType}
-            icon={Package}
-            variant="inventory"
-          />
-        </div>
+        <Grid container spacing={3} mb={3}>
+          <Grid item xs={12} sm={6} lg={3}>
+            <MetricCard
+              title="Total Revenue"
+              value={mockMetrics.revenue.value}
+              change={mockMetrics.revenue.change}
+              changeType={mockMetrics.revenue.changeType}
+              icon={DollarSign}
+              variant="revenue"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
+            <MetricCard
+              title="Net Profit"
+              value={mockMetrics.profit.value}
+              change={mockMetrics.profit.change}
+              changeType={mockMetrics.profit.changeType}
+              icon={TrendingUp}
+              variant="profit"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
+            <MetricCard
+              title="Total Expenses"
+              value={mockMetrics.expenses.value}
+              change={mockMetrics.expenses.change}
+              changeType={mockMetrics.expenses.changeType}
+              icon={DollarSign}
+              variant="expense"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
+            <MetricCard
+              title="Inventory Items"
+              value={mockMetrics.inventory.value}
+              change={mockMetrics.inventory.change}
+              changeType={mockMetrics.inventory.changeType}
+              icon={Package}
+              variant="inventory"
+            />
+          </Grid>
+        </Grid>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Recent Sales */}
-          <div className="lg:col-span-2">
-            <Card className="metric-card">
+        {/* Two-column layout */}
+        <Grid container spacing={3}>
+          {/* Recent Sales - Left Column */}
+          <Grid item xs={12} md={8}>
+            <Card>
               <CardHeader
                 title={
-                  <div className="flex items-center space-x-2">
-                    <ShoppingCart className="h-5 w-5 text-primary" />
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <ShoppingCart size={18} />
                     <span>Recent Sales</span>
-                  </div>
+                  </Box>
                 }
                 subheader="Latest transactions from your business"
                 action={
@@ -177,27 +189,36 @@ export default function Dashboard() {
                     variant="outlined"
                     size="small"
                     onClick={() => navigate("/sales")}
-                    endIcon={<ArrowRight className="h-4 w-4" />}
+                    endIcon={<ArrowRight size={16} />}
                   >
                     View All
                   </Button>
                 }
               />
               <CardContent>
-                <div className="space-y-4">
+                <Stack spacing={1.5}>
                   {recentSales.map((sale) => (
-                    <div
+                    <Box
                       key={sale.id}
-                      className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      sx={{
+                        p: 1.5,
+                        borderRadius: 2,
+                        bgcolor: "action.hover",
+                      }}
                     >
-                      <div className="space-y-1">
-                        <p className="font-medium">{sale.customer}</p>
-                        <p className="text-sm text-muted-foreground">
+                      <Box>
+                        <Typography fontWeight={600}>
+                          {sale.customer}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
                           {sale.date}
-                        </p>
-                      </div>
-                      <div className="text-right space-y-1">
-                        <p className="font-semibold">{sale.amount}</p>
+                        </Typography>
+                      </Box>
+                      <Box textAlign="right">
+                        <Typography fontWeight={700}>{sale.amount}</Typography>
                         <Chip
                           size="small"
                           label={sale.status}
@@ -206,107 +227,122 @@ export default function Dashboard() {
                           }
                           variant="filled"
                         />
-                      </div>
-                    </div>
+                      </Box>
+                    </Box>
                   ))}
-                </div>
+                </Stack>
               </CardContent>
             </Card>
-          </div>
+          </Grid>
 
-          {/* Quick Actions & Alerts */}
-          <div className="space-y-6">
-            {/* Quick Actions */}
-            <Card className="metric-card">
-              <CardHeader
-                title={
-                  <div className="flex items-center space-x-2">
-                    <Plus className="h-5 w-5 text-primary" />
-                    <span>Quick Actions</span>
-                  </div>
-                }
-                subheader="Common business tasks"
-              />
-              <CardContent className="space-y-3">
-                <Button
-                  className="w-full business-button-primary justify-start"
-                  variant="contained"
-                  onClick={() => navigate("/sales")}
-                  startIcon={<ShoppingCart className="h-4 w-4" />}
-                >
-                  New Sale
-                </Button>
-                <Button
-                  variant="outlined"
-                  className="w-full justify-start"
-                  onClick={() => navigate("/customers")}
-                  startIcon={<Users className="h-4 w-4" />}
-                >
-                  Add Customer
-                </Button>
-                <Button
-                  variant="outlined"
-                  className="w-full justify-start"
-                  onClick={() => navigate("/inventory")}
-                  startIcon={<Package className="h-4 w-4" />}
-                >
-                  Add Product
-                </Button>
-                <Button
-                  variant="outlined"
-                  className="w-full justify-start"
-                  onClick={() => navigate("/ai-assistant")}
-                  startIcon={<Brain className="h-4 w-4" />}
-                >
-                  AI Assistant
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Low Stock Alert */}
-            <Card className="metric-card border-amber-200 bg-amber-50/50">
-              <CardHeader
-                title={
-                  <div className="flex items-center space-x-2 text-amber-700">
-                    <AlertCircle className="h-5 w-5" />
-                    <span>Low Stock Alert</span>
-                  </div>
-                }
-                subheader="Items that need restocking"
-              />
-              <CardContent>
-                <div className="space-y-3">
-                  {lowStockItems.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between text-sm"
+          {/* Right Column: Quick Actions + Alerts */}
+          <Grid item xs={12} md={4}>
+            <Stack spacing={3}>
+              <Card>
+                <CardHeader
+                  title={
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <Plus size={18} />
+                      <span>Quick Actions</span>
+                    </Box>
+                  }
+                  subheader="Common business tasks"
+                />
+                <CardContent>
+                  <Stack spacing={1.5}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      onClick={() => navigate("/sales")}
+                      startIcon={<ShoppingCart size={16} />}
                     >
-                      <span className="font-medium">{item.name}</span>
-                      <div className="text-right">
-                        <span className="text-amber-700 font-semibold">
-                          {item.stock}
-                        </span>
-                        <span className="text-muted-foreground">
-                          {" "}
-                          / {item.minStock}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  className="w-full mt-4"
-                  onClick={() => navigate("/inventory")}
-                >
-                  Manage Inventory
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
+                      New Sale
+                    </Button>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      onClick={() => navigate("/customers")}
+                      startIcon={<Users size={16} />}
+                    >
+                      Add Customer
+                    </Button>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      onClick={() => navigate("/inventory")}
+                      startIcon={<Package size={16} />}
+                    >
+                      Add Product
+                    </Button>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      onClick={() => navigate("/ai-assistant")}
+                      startIcon={<Brain size={16} />}
+                    >
+                      AI Assistant
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+
+              <Card sx={{ borderColor: "warning.light" }} variant="outlined">
+                <CardHeader
+                  title={
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      gap={1}
+                      color="warning.main"
+                    >
+                      <AlertCircle size={18} />
+                      <span>Low Stock Alert</span>
+                    </Box>
+                  }
+                  subheader="Items that need restocking"
+                />
+                <CardContent>
+                  <Stack spacing={1.5}>
+                    {lowStockItems.map((item, index) => (
+                      <Box
+                        key={index}
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Typography fontWeight={600} variant="body2">
+                          {item.name}
+                        </Typography>
+                        <Box textAlign="right">
+                          <Typography
+                            color="warning.main"
+                            fontWeight={700}
+                            component="span"
+                          >
+                            {item.stock}
+                          </Typography>
+                          <Typography color="text.secondary" component="span">
+                            {` / ${item.minStock}`}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    ))}
+                  </Stack>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    sx={{ mt: 2 }}
+                    onClick={() => navigate("/inventory")}
+                  >
+                    Manage Inventory
+                  </Button>
+                </CardContent>
+              </Card>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Box>
     </DashboardLayout>
   );
 }
