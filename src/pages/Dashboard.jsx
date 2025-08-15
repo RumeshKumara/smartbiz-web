@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../hooks/use-toast";
 
 import {
   DollarSign,
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import MetricCard from "../components/dashboard/MetricCard";
+import { Card, CardHeader, CardContent, Button, Chip } from "@mui/material";
 
 // Mock data - in a real app, this would come from an API
 const mockMetrics = {
@@ -114,10 +116,11 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex items-center space-x-2 mt-4 sm:mt-0">
-            <Badge variant="outline" className="flex items-center space-x-1">
-              <Calendar className="h-3 w-3" />
-              <span>{currentTime.toLocaleDateString()}</span>
-            </Badge>
+            <Chip
+              variant="outlined"
+              icon={<Calendar className="h-3 w-3" />}
+              label={currentTime.toLocaleDateString()}
+            />
           </div>
         </div>
 
@@ -161,27 +164,25 @@ export default function Dashboard() {
           {/* Recent Sales */}
           <div className="lg:col-span-2">
             <Card className="metric-card">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center space-x-2">
-                      <ShoppingCart className="h-5 w-5 text-primary" />
-                      <span>Recent Sales</span>
-                    </CardTitle>
-                    <CardDescription>
-                      Latest transactions from your business
-                    </CardDescription>
+              <CardHeader
+                title={
+                  <div className="flex items-center space-x-2">
+                    <ShoppingCart className="h-5 w-5 text-primary" />
+                    <span>Recent Sales</span>
                   </div>
+                }
+                subheader="Latest transactions from your business"
+                action={
                   <Button
-                    variant="outline"
-                    size="sm"
+                    variant="outlined"
+                    size="small"
                     onClick={() => navigate("/sales")}
+                    endIcon={<ArrowRight className="h-4 w-4" />}
                   >
                     View All
-                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </div>
-              </CardHeader>
+                }
+              />
               <CardContent>
                 <div className="space-y-4">
                   {recentSales.map((sale) => (
@@ -197,16 +198,14 @@ export default function Dashboard() {
                       </div>
                       <div className="text-right space-y-1">
                         <p className="font-semibold">{sale.amount}</p>
-                        <Badge
-                          variant={
-                            sale.status === "completed"
-                              ? "default"
-                              : "secondary"
+                        <Chip
+                          size="small"
+                          label={sale.status}
+                          color={
+                            sale.status === "completed" ? "success" : "warning"
                           }
-                          className="text-xs"
-                        >
-                          {sale.status}
-                        </Badge>
+                          variant="filled"
+                        />
                       </div>
                     </div>
                   ))}
@@ -219,43 +218,46 @@ export default function Dashboard() {
           <div className="space-y-6">
             {/* Quick Actions */}
             <Card className="metric-card">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Plus className="h-5 w-5 text-primary" />
-                  <span>Quick Actions</span>
-                </CardTitle>
-                <CardDescription>Common business tasks</CardDescription>
-              </CardHeader>
+              <CardHeader
+                title={
+                  <div className="flex items-center space-x-2">
+                    <Plus className="h-5 w-5 text-primary" />
+                    <span>Quick Actions</span>
+                  </div>
+                }
+                subheader="Common business tasks"
+              />
               <CardContent className="space-y-3">
                 <Button
                   className="w-full business-button-primary justify-start"
+                  variant="contained"
                   onClick={() => navigate("/sales")}
+                  startIcon={<ShoppingCart className="h-4 w-4" />}
                 >
-                  <ShoppingCart className="mr-2 h-4 w-4" />
                   New Sale
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="outlined"
                   className="w-full justify-start"
                   onClick={() => navigate("/customers")}
+                  startIcon={<Users className="h-4 w-4" />}
                 >
-                  <Users className="mr-2 h-4 w-4" />
                   Add Customer
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="outlined"
                   className="w-full justify-start"
                   onClick={() => navigate("/inventory")}
+                  startIcon={<Package className="h-4 w-4" />}
                 >
-                  <Package className="mr-2 h-4 w-4" />
                   Add Product
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="outlined"
                   className="w-full justify-start"
                   onClick={() => navigate("/ai-assistant")}
+                  startIcon={<Brain className="h-4 w-4" />}
                 >
-                  <Brain className="mr-2 h-4 w-4" />
                   AI Assistant
                 </Button>
               </CardContent>
@@ -263,13 +265,15 @@ export default function Dashboard() {
 
             {/* Low Stock Alert */}
             <Card className="metric-card border-amber-200 bg-amber-50/50">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-amber-700">
-                  <AlertCircle className="h-5 w-5" />
-                  <span>Low Stock Alert</span>
-                </CardTitle>
-                <CardDescription>Items that need restocking</CardDescription>
-              </CardHeader>
+              <CardHeader
+                title={
+                  <div className="flex items-center space-x-2 text-amber-700">
+                    <AlertCircle className="h-5 w-5" />
+                    <span>Low Stock Alert</span>
+                  </div>
+                }
+                subheader="Items that need restocking"
+              />
               <CardContent>
                 <div className="space-y-3">
                   {lowStockItems.map((item, index) => (
@@ -291,8 +295,8 @@ export default function Dashboard() {
                   ))}
                 </div>
                 <Button
-                  variant="outline"
-                  size="sm"
+                  variant="outlined"
+                  size="small"
                   className="w-full mt-4"
                   onClick={() => navigate("/inventory")}
                 >
