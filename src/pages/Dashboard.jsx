@@ -143,44 +143,60 @@ export default function Dashboard() {
         {/* Key Metrics */}
         <Grid container spacing={3} mb={3}>
           <Grid item xs={12} sm={6} lg={3}>
-            <MetricCard
-              title="Total Revenue"
-              value={mockMetrics.revenue.value}
-              change={mockMetrics.revenue.change}
-              changeType={mockMetrics.revenue.changeType}
-              icon={DollarSign}
-              variant="revenue"
-            />
+            <Box
+              sx={{ bgcolor: "#e3f2fd", borderRadius: 3, boxShadow: 0, p: 1 }}
+            >
+              <MetricCard
+                title="Total Revenue"
+                value={mockMetrics.revenue.value}
+                change={mockMetrics.revenue.change}
+                changeType={mockMetrics.revenue.changeType}
+                icon={DollarSign}
+                variant="revenue"
+              />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <MetricCard
-              title="Net Profit"
-              value={mockMetrics.profit.value}
-              change={mockMetrics.profit.change}
-              changeType={mockMetrics.profit.changeType}
-              icon={TrendingUp}
-              variant="profit"
-            />
+            <Box
+              sx={{ bgcolor: "#e8f5e9", borderRadius: 3, boxShadow: 0, p: 1 }}
+            >
+              <MetricCard
+                title="Net Profit"
+                value={mockMetrics.profit.value}
+                change={mockMetrics.profit.change}
+                changeType={mockMetrics.profit.changeType}
+                icon={TrendingUp}
+                variant="profit"
+              />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <MetricCard
-              title="Total Expenses"
-              value={mockMetrics.expenses.value}
-              change={mockMetrics.expenses.change}
-              changeType={mockMetrics.expenses.changeType}
-              icon={DollarSign}
-              variant="expense"
-            />
+            <Box
+              sx={{ bgcolor: "#fff3e0", borderRadius: 3, boxShadow: 0, p: 1 }}
+            >
+              <MetricCard
+                title="Total Expenses"
+                value={mockMetrics.expenses.value}
+                change={mockMetrics.expenses.change}
+                changeType={mockMetrics.expenses.changeType}
+                icon={DollarSign}
+                variant="expense"
+              />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
-            <MetricCard
-              title="Inventory Items"
-              value={mockMetrics.inventory.value}
-              change={mockMetrics.inventory.change}
-              changeType={mockMetrics.inventory.changeType}
-              icon={Package}
-              variant="inventory"
-            />
+            <Box
+              sx={{ bgcolor: "#ede7f6", borderRadius: 3, boxShadow: 0, p: 1 }}
+            >
+              <MetricCard
+                title="Inventory Items"
+                value={mockMetrics.inventory.value}
+                change={mockMetrics.inventory.change}
+                changeType={mockMetrics.inventory.changeType}
+                icon={Package}
+                variant="inventory"
+              />
+            </Box>
           </Grid>
         </Grid>
 
@@ -188,7 +204,14 @@ export default function Dashboard() {
         <Grid container spacing={3}>
           {/* Recent Sales - Left Column */}
           <Grid item xs={12} md={8}>
-            <Card sx={{ bgcolor: "#fff", borderRadius: 3, boxShadow: 1 }}>
+            <Card
+              sx={{
+                bgcolor: "#fff",
+                borderRadius: 3,
+                boxShadow: 1,
+                borderLeft: "6px solid #4f8cff",
+              }}
+            >
               <CardHeader
                 title={
                   <Box display="flex" alignItems="center" gap={1}>
@@ -213,7 +236,7 @@ export default function Dashboard() {
                   </Button>
                 }
               />
-              <CardContent>
+              <CardContent sx={{ bgcolor: "#f7fbff", borderRadius: 2 }}>
                 <Stack spacing={1.5}>
                   {recentSales.map((sale) => (
                     <Box
@@ -257,7 +280,14 @@ export default function Dashboard() {
           {/* Right Column: Quick Actions + Alerts */}
           <Grid item xs={12} md={4}>
             <Stack spacing={3}>
-              <Card sx={{ bgcolor: "#f0f7ff", borderRadius: 3, boxShadow: 0 }}>
+              <Card
+                sx={{
+                  bgcolor: "#e3f2fd",
+                  borderRadius: 3,
+                  boxShadow: 0,
+                  borderLeft: "6px solid #4f8cff",
+                }}
+              >
                 <CardHeader
                   title={
                     <Box display="flex" alignItems="center" gap={1}>
@@ -335,6 +365,7 @@ export default function Dashboard() {
                   bgcolor: "#fffde7",
                   borderRadius: 3,
                   boxShadow: 0,
+                  borderLeft: "6px solid #ff9800",
                 }}
                 variant="outlined"
               >
