@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-import LoginForm from "./components/auth/LoginForm";
 
 const theme = createTheme();
 
@@ -39,7 +38,7 @@ const App = () => {
         <SnackbarProvider maxSnack={3}>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<LoginForm />} />
+              <Route path="/" element={<Index />} />
               <Route
                 path="/dashboard"
                 element={
