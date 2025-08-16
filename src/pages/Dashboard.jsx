@@ -101,7 +101,7 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout userRole="business">
-      <Box>
+      <Box sx={{ bgcolor: "#f4f6fb", minHeight: "100vh", p: { xs: 1, sm: 3 } }}>
         {/* Welcome Header */}
         <Box
           display="flex"
@@ -109,20 +109,33 @@ export default function Dashboard() {
           alignItems={{ sm: "center" }}
           justifyContent="space-between"
           mb={3}
+          sx={{
+            background: "linear-gradient(90deg, #4f8cff 0%, #6dd5ed 100%)",
+            borderRadius: 3,
+            p: { xs: 2, sm: 3 },
+            boxShadow: 2,
+            color: "#fff",
+          }}
         >
           <Box>
-            <Typography variant="h4" fontWeight={700} gutterBottom>
+            <Typography
+              variant="h4"
+              fontWeight={700}
+              gutterBottom
+              sx={{ color: "#fff" }}
+            >
               Welcome back! 👋
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body1" sx={{ color: "#e3eafc" }}>
               Here's what's happening with {businessName} today.
             </Typography>
           </Box>
           <Box mt={{ xs: 2, sm: 0 }}>
             <Chip
-              variant="outlined"
+              variant="filled"
               icon={<Calendar size={14} />}
               label={currentTime.toLocaleDateString()}
+              sx={{ bgcolor: "#fff", color: "#4f8cff", fontWeight: 600 }}
             />
           </Box>
         </Box>
@@ -175,7 +188,7 @@ export default function Dashboard() {
         <Grid container spacing={3}>
           {/* Recent Sales - Left Column */}
           <Grid item xs={12} md={8}>
-            <Card>
+            <Card sx={{ bgcolor: "#fff", borderRadius: 3, boxShadow: 1 }}>
               <CardHeader
                 title={
                   <Box display="flex" alignItems="center" gap={1}>
@@ -186,8 +199,13 @@ export default function Dashboard() {
                 subheader="Latest transactions from your business"
                 action={
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     size="small"
+                    sx={{
+                      bgcolor: "#4f8cff",
+                      color: "#fff",
+                      "&:hover": { bgcolor: "#357ae8" },
+                    }}
                     onClick={() => navigate("/sales")}
                     endIcon={<ArrowRight size={16} />}
                   >
@@ -206,7 +224,8 @@ export default function Dashboard() {
                       sx={{
                         p: 1.5,
                         borderRadius: 2,
-                        bgcolor: "action.hover",
+                        bgcolor:
+                          sale.status === "completed" ? "#e6f7ee" : "#fffbe6",
                       }}
                     >
                       <Box>
@@ -238,7 +257,7 @@ export default function Dashboard() {
           {/* Right Column: Quick Actions + Alerts */}
           <Grid item xs={12} md={4}>
             <Stack spacing={3}>
-              <Card>
+              <Card sx={{ bgcolor: "#f0f7ff", borderRadius: 3, boxShadow: 0 }}>
                 <CardHeader
                   title={
                     <Box display="flex" alignItems="center" gap={1}>
@@ -253,6 +272,12 @@ export default function Dashboard() {
                     <Button
                       fullWidth
                       variant="contained"
+                      sx={{
+                        bgcolor: "#4f8cff",
+                        color: "#fff",
+                        fontWeight: 700,
+                        "&:hover": { bgcolor: "#357ae8" },
+                      }}
                       onClick={() => navigate("/sales")}
                       startIcon={<ShoppingCart size={16} />}
                     >
@@ -261,6 +286,12 @@ export default function Dashboard() {
                     <Button
                       fullWidth
                       variant="outlined"
+                      sx={{
+                        borderColor: "#4f8cff",
+                        color: "#4f8cff",
+                        fontWeight: 600,
+                        "&:hover": { bgcolor: "#e3eafc" },
+                      }}
                       onClick={() => navigate("/customers")}
                       startIcon={<Users size={16} />}
                     >
@@ -269,6 +300,12 @@ export default function Dashboard() {
                     <Button
                       fullWidth
                       variant="outlined"
+                      sx={{
+                        borderColor: "#4f8cff",
+                        color: "#4f8cff",
+                        fontWeight: 600,
+                        "&:hover": { bgcolor: "#e3eafc" },
+                      }}
                       onClick={() => navigate("/inventory")}
                       startIcon={<Package size={16} />}
                     >
@@ -277,6 +314,12 @@ export default function Dashboard() {
                     <Button
                       fullWidth
                       variant="outlined"
+                      sx={{
+                        borderColor: "#4f8cff",
+                        color: "#4f8cff",
+                        fontWeight: 600,
+                        "&:hover": { bgcolor: "#e3eafc" },
+                      }}
                       onClick={() => navigate("/ai-assistant")}
                       startIcon={<Brain size={16} />}
                     >
@@ -286,14 +329,22 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              <Card sx={{ borderColor: "warning.light" }} variant="outlined">
+              <Card
+                sx={{
+                  borderColor: "#ffb300",
+                  bgcolor: "#fffde7",
+                  borderRadius: 3,
+                  boxShadow: 0,
+                }}
+                variant="outlined"
+              >
                 <CardHeader
                   title={
                     <Box
                       display="flex"
                       alignItems="center"
                       gap={1}
-                      color="warning.main"
+                      color="#ff9800"
                     >
                       <AlertCircle size={18} />
                       <span>Low Stock Alert</span>
@@ -315,7 +366,7 @@ export default function Dashboard() {
                         </Typography>
                         <Box textAlign="right">
                           <Typography
-                            color="warning.main"
+                            sx={{ color: "#ff9800" }}
                             fontWeight={700}
                             component="span"
                           >
@@ -332,7 +383,13 @@ export default function Dashboard() {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    sx={{ mt: 2 }}
+                    sx={{
+                      mt: 2,
+                      borderColor: "#ff9800",
+                      color: "#ff9800",
+                      fontWeight: 600,
+                      "&:hover": { bgcolor: "#fff3e0" },
+                    }}
                     onClick={() => navigate("/inventory")}
                   >
                     Manage Inventory
