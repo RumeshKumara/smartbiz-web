@@ -325,6 +325,20 @@ export default function Dashboard() {
                       onClick={() => navigate("/customers")}
                       startIcon={<Users size={16} />}
                     >
+                      Customers
+                    </Button>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      sx={{
+                        borderColor: "#4f8cff",
+                        color: "#4f8cff",
+                        fontWeight: 600,
+                        "&:hover": { bgcolor: "#e3eafc" },
+                      }}
+                      onClick={() => navigate("/customers")}
+                      startIcon={<Users size={16} />}
+                    >
                       Add Customer
                     </Button>
                     <Button
